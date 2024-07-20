@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useMemo } from "react";
 import { GiphyFetch } from "@giphy/js-fetch-api";
@@ -39,10 +39,12 @@ export default function GifDetail() {
 
   if (status === "loading") return <p>Loading...</p>;
   if (status === "failed") return <p>Error: {error}</p>;
-
+ 
   return (
-    <div className="min-h-screen flex flex-col items-center">
-      {gif && <Gif gif={gif.data} width={300} />}
+    <div className="min-h-screen flex flex-col items-center mt-5">
+      <h1 className="text-2xl font-bold">GIF Detail</h1>
+      {gif && gif.data.title}
+      {gif && <Gif gif={gif.data} width={500} />}
     </div>
   );
 }
