@@ -1,5 +1,5 @@
 "use client";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, useMemo } from "react";
 import { GiphyFetch } from "@giphy/js-fetch-api";
 import { Gif } from "@giphy/react-components";
@@ -34,17 +34,34 @@ const useGif = (id) => {
 
 export default function GifDetail() {
   const pathname = usePathname();
+  const router = useRouter();
   const id = useMemo(() => pathname.split("/").pop(), [pathname]);
   const { gif, status, error } = useGif(id);
 
-  if (status === "loading") return <p>Loading...</p>;
-  if (status === "failed") return <p>Error: {error}</p>;
- 
+  if (status === "loading")
+    return <p className="text-center mt-20">Loading...</p>;
+  if (status === "failed")
+    return <p className="text-center mt-20">Error: {error}</p>;
+
   return (
-    <div className="min-h-screen flex flex-col items-center mt-5">
-      <h1 className="text-2xl font-bold">GIF Detail</h1>
-      {gif && gif.data.title}
-      {gif && <Gif gif={gif.data} width={500} />}
+    <div className="flex flex-col items-center justify-center">
+      <header className="w-full text-white py-4 flex justify-between items-center px-6">
+        <button
+          onClick={() => router.push("/")}
+          className="bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-gray-200"
+        >
+          Back to Home
+        </button>
+      </header>
+      <div className="flex flex-col items-center mt-10">
+        <h1 className="text-3xl font-bold mb-8">GIF Detail</h1>
+        {gif && (
+          <>
+            <p className="text-xl mb-4">{gif.data.title}</p>
+            <Gif gif={gif.data} width={500} />
+          </>
+        )}
+      </div>
     </div>
   );
 }

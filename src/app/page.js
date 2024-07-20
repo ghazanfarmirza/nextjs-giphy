@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Grid } from "@giphy/react-components";
 import { GiphyFetch } from "@giphy/js-fetch-api";
 import { useRouter } from "next/navigation";
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGifs } from "../slices/gifsSlice";
 
@@ -18,6 +17,7 @@ export default function Home() {
   const error = useSelector((state) => state.gifs.error);
 
   const fetchMoreGifs = (offset) => gf.trending({ offset, limit: 10 });
+
   useEffect(() => {
     if (gifStatus === "idle") {
       dispatch(fetchGifs());
@@ -25,15 +25,15 @@ export default function Home() {
   }, [gifStatus, dispatch]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center">
-      <h1 className="text-4xl font-bold my-8">Trending GIFs</h1>
+    <div className="min-h-screen flex flex-col items-center mt-10">
+      <h1 className="text-4xl font-bold mb-8">Trending GIFs</h1>
       {gifStatus === "loading" && <p>Loading...</p>}
       {gifStatus === "failed" && <p>{error}</p>}
       {gifStatus === "succeeded" && (
         <Grid
           width={800}
-          columns={3}
-          gutter={6}
+          columns={5}
+          gutter={5}
           fetchGifs={fetchMoreGifs}
           initialGifs={gifs}
           onGifClick={(gif, e) => {
