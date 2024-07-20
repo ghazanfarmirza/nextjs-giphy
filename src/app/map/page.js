@@ -26,7 +26,7 @@ const MapPage = () => {
         <MapContainer
           center={[51.505, -0.09]}
           zoom={13}
-          className="h-full w-full"
+          className="h-96 w-full"
         >
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
